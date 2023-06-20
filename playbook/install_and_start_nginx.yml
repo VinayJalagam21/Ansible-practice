@@ -1,0 +1,23 @@
+-
+  name: Install nginx and start it
+  hosts: my-servers
+  become: yes
+
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: latest
+
+    - name: Start Nginx
+      service: 
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: do cool edits
+      copy:
+        src: index.html
+        dest: /var/www/html
+      when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+
